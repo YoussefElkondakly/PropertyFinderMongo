@@ -79,7 +79,21 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = user;
   next();
 });
+exports.accessManager=function(role){
+  return function(req,res,next){
 
+    if(!(req.user.role===role)) 
+      return next(new AppError("You are not allowed to access this route",400));
+    next();
+  }
+}
+exports.isVerified=(req,res,next)=>{
+     if (!req.user.verified)
+       return next(
+         new AppError("You Cant make any Ad unless Your account Be Verified")
+       );
+       next()
+}
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
     name: req.body.name,
@@ -99,11 +113,14 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 //find && findOne
 exports.login = catchAsync(async (req, res, next) => {
+if(!req.body.phone.includes('+2'))req.body.phone="+2"+req.body.phone
   const user = await User.findOne({ phone: req.body.phone }).select(
     "+password"
   );
-  if (!user) return next(new AppError("Incorrect Phone Or Password", 404));
-  console.dir(user);
+  
+  if (!user || !user.status)
+    return next(new AppError("Incorrect Phone Or Password", 404));
+  // console.dir(user);
   const checkPassword = await user.checkPassword(
     req.body.password,
     user.password

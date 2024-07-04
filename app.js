@@ -2,18 +2,22 @@ process.on('uncaughtException',e=>console.log(e))
 const express=require('express')
 const authRoutes=require('./routes/authRoutes')
 const userRoutes=require('./routes/userRoutes')
-const appRoutes=require('./routes/appRoutes')
+const agentRoutes=require('./routes/agentRoutes')
+const clientRoutes = require("./routes/clientRoutes");
 const errController=require('./utils/errHandler')
 const AppError=require('./utils/appError')
 // const {protect}=require('./controller/authController')
 
 const app=express()
 const baseUrl = "/matchingSystem/propertyFinder/";
+app.use(baseUrl+'uploads/',express.static('uploads'))
 app.use(express.json())
-// app.use()
+
+
 app.use(baseUrl+"auth",authRoutes);
 app.use(baseUrl+"user",userRoutes)
-// app.use(baseUrl+'users',protect,appRoutes)
+app.use(baseUrl+'agent',agentRoutes)
+app.use(baseUrl+'client',clientRoutes)
 
 app.all('*',(req,res,next)=>{
     const err=new AppError(`Can't find ${req.originalUrl} on this server`,404)

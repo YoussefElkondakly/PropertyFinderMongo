@@ -1,14 +1,26 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
+const validator=require('validator')
 const userSchema = mongoose.Schema({
   name: { type: String, required: true },
   phone: {
     type: String,
     required: true,
-    minlength: [11, "Please Type a Correct Phone Number"],
-    maxlength: [11, "Please Type a Correct Phone Number"],
+    // minlength: [11, "Please Type a Correct Phone Number"],
+    // maxlength: [11, "Please Type a Correct Phone Number"],
     unique: true,
+    validate: {
+      validator: (v) => {
+        const a = validator.isMobilePhone(v, ["ar-EG"],{
+          strictMode: true,
+        });
+
+        return a;
+      },
+      message: "Please Type a Correct Phone Number",
+    },
+   
   },
   role: {
     type: String,
@@ -34,7 +46,7 @@ const userSchema = mongoose.Schema({
       validator: function (el) {
         return el === this.password;
       },
-      message: "The Passwords Do Not Match",
+      message: "The Passwords Doesn't Match",
     },
   },
   status: {
@@ -51,11 +63,11 @@ const userSchema = mongoose.Schema({
   verifyUserToken: String,
 });
 userSchema.methods.checkChangedPassword = function (jwtIat) {
-  console.log("Hi");
+  // console.log("Hi");
   if (this.passwordChangedAt) {
     const changedPasswordTime = this.passwordChangedAt.getTime() / 1000;
-    console.log(changedPasswordTime, jwtIat);
-    console.log(jwtIat < changedPasswordTime);
+    // console.log(changedPasswordTime, jwtIat);
+    // console.log(jwtIat < changedPasswordTime);
     return jwtIat < changedPasswordTime;
   }
   return false;
