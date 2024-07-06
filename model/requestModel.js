@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 Area: Heliopolis
 City: Cairo
 District: Heliopolis district, Cairo Governorate
+district, price, and area
 */
 const requestSchema = mongoose.Schema({
   client: {
@@ -10,40 +11,48 @@ const requestSchema = mongoose.Schema({
     ref: "User",
     required: true,
   },
-  propertyType: {
-    type: String,
-    uppercase: true,
-    required: [true, "Please Enter the Property Type "],
-    enum: {
-      values: ["VILLA", "HOUSE", "LAND", "APARTMENT"],
-      message: "Please Insert a Correct Property Type",
-    },
-  },
-  type: {
-    type: String,
-    required: [true, "Please Type do you want to buy or rent"],
-    uppercase: true,
-
-    enum: {
-      values: ["SALE", "RENT"],
-      message: "Please Give me which Type of owning a property do you want",
-    },
-  },
-  budget: {
+  price: {
     type: Number,
     required: [
       true,
       "Please Type what is the maximum price you can provide or buy",
     ],
   },
-  area: String,
+  area: {
+    type: String,
+    required: [true, "you Need To provide the area of the property"],
+  },
+  district: {
+    type: String,
+    required: [true, "you Need To provide the district of the property"],
+  },
+  //Non required with requests
+    propertyType: {
+    type: String,
+    uppercase: true,
+ enum: {
+      values: ["VILLA", "HOUSE", "LAND", "APARTMENT"],
+      message: "Please Insert a Correct Property Type",
+    },
+  }, 
+  description: String,
   city: String,
   note: String,
-  status:{
+  status: {
     type: Boolean,
-    default: false
+    default: false,
   },
+  refreshedAt:{
+    type: Date,
+    default: Date.now
+  }
 });
-
+requestSchema.pre(/^find/,function(next){
+  this.populate({
+    path: "client",
+    select: "name phone -_id",
+    });
+    next();
+})
 const RequestAd = mongoose.model("RequestAd", requestSchema);
 module.exports = RequestAd;

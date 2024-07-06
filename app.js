@@ -18,6 +18,7 @@ app.use(baseUrl+"auth",authRoutes);
 app.use(baseUrl+"user",userRoutes)
 app.use(baseUrl+'agent',agentRoutes)
 app.use(baseUrl+'client',clientRoutes)
+app.use(baseUrl + "admin", adminRoutes);
 
 app.all('*',(req,res,next)=>{
     const err=new AppError(`Can't find ${req.originalUrl} on this server`,404)

@@ -5,7 +5,7 @@ We have 3 resources
 Property request: when you need to rent or buy a property you make a request on the application with your specific needs and there are real estate agents on the application they will contact you to get what you need
 Ad: agents can create ads for clients who want to rent or buy a property
 User: 
-client: the user who can make requests **to any ad in his home**
+client: the user who can make requests 
 Agent: the user who can make ads
 Admin: a super admin who can do anything 
 
@@ -14,10 +14,10 @@ Admin: a super admin who can do anything
 1. **Database Schema Design:**
    - Create a schema for storing property requests, including attributes like:
      - `propertyType` ‘VILLA’ | ‘HOUSE’ |’LAND’ | ‘APARTMENT’
-     - `area`
-     - `price`
+     - @`area`
+     - @`price`
      - `city`
-     - `district`
+     - @`district`
      - `description`
      - `refreshedAt`: Date (date of last time user refreshed his request)
    - Create a schema for storing ads with same attributes.
@@ -34,12 +34,14 @@ Admin: a super admin who can do anything
    - Implement an endpoint for updating property requests (description - area - price).
    - Implement an endpoint for creating ads used by agents only.
    *aggregation EndPoint*
-   - Implement an endpoint that matches property requests with relevant ads based on district, price, and area.
-     - The endpoint should take an ad `_id` and return matching property requests, sorted by refreshedAt date descending.
+   **HardMatchig**
+   <!-- - Implement an endpoint that matches property requests with relevant ads based on district, price, and area.For User -->
+     <!-- - The endpoint should take an ad `_id` and return matching property requests, sorted by refreshedAt date descending. with Agent -->
      - Include a price tolerance of +/- 10% in the matching system.
         - example: if ad price is 100 then requests with price 90 to 110 will be matched
      - Include pagination in the response using MongoDB aggregation with a `single` database call.
      - Ensure that the matching logic is efficient and can handle a large number of requests and ads (performance considerations).
+
    - Implement an endpoint for admin users to return statistics about how many ads or requests exist for a user (client or agent) and the total amount of those ads or requests.
      - Only admins can access this endpoint.
      - Use MongoDB's aggregation framework to implement this endpoint.

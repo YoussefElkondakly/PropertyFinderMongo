@@ -53,7 +53,6 @@ const sendJsonResponseToken = function (
   });
 };
 exports.protect = catchAsync(async (req, res, next) => {
-  console.log(req.headers.authorization);
   if (
     !req.headers.authorization ||
     !(req.headers.authorization.split(" ")[0] === "Bearer")
@@ -95,6 +94,7 @@ exports.isVerified=(req,res,next)=>{
        next()
 }
 exports.signup = catchAsync(async (req, res, next) => {
+  if (!req.body.phone.includes("+2")) req.body.phone = "+2" + req.body.phone;
   const newUser = await User.create({
     name: req.body.name,
     phone: req.body.phone,
