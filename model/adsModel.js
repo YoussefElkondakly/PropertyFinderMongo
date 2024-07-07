@@ -39,11 +39,13 @@ adsSchema.pre(/^find/, function (next) {
   });
   next();
 });
-// adsSchema.post('aggregate',async function(next){
+// adsSchema.pre('aggregate',async function(next){
+// await this.populate({
+//   path: "agent",
+//   select: "name phone -_id",
 
-//    await mongoose.model('Ads').populate(this, { path: "agent", select: "name phone -_id" });
-
-//    next();
+// })
+// next()
 // })
 
 const Ads = mongoose.model("Ads", adsSchema);

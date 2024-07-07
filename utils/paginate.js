@@ -1,5 +1,8 @@
 const paginate = function (reqQuery, query) {
-  const page = reqQuery.page * 1 || 1;
-  return query.skip((page - 1) * 10).limit(10);
+  let limit=10
+  let page= 1;
+  if(reqQuery.page && reqQuery.limit){limit=reqQuery.limit*1;page=reqQuery.page*1}
+  // console.log(limit, page)
+  return query.skip((page - 1) * limit).limit(limit);
 };
 module.exports=paginate

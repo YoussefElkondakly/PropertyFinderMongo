@@ -1,0 +1,980 @@
+{
+	"info": {
+		"_postman_id": "bcdbfd08-4744-42c6-8748-e39d0e271b86",
+		"name": "Property Finder",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36216095",
+		"_collection_link": "https://www.postman.com/supply-explorer-59337991/workspace/youssef-elkondakly/collection/36216095-bcdbfd08-4744-42c6-8748-e39d0e271b86?action=share&source=collection_link&creator=36216095"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\": \"01221334160\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgotPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\":\"0109983511\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/forgotPassword",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"forgotPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resetPassword",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"newpassword\",\r\n    \"confirmPassword\":\"newpassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/resetPassword/61ac178b429f83d92b0c736331c84bd5a05888f0cf1e1d73473ba6965a34a6d1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"resetPassword",
+								"61ac178b429f83d92b0c736331c84bd5a05888f0cf1e1d73473ba6965a34a6d1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyAccount",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/verifyaccount/caf8c60edf5adcab7548f245a6e63c140305b7fd4beeae3a67c1d3644c91f2b4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"verifyaccount",
+								"caf8c60edf5adcab7548f245a6e63c140305b7fd4beeae3a67c1d3644c91f2b4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signUp",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"agent7\",\r\n     \"phone\":\"01221334162\"\r\n,\r\n    \"role\":\"agent\",\r\n    \"password\":\"password\",\r\n    \"confirmPassword\":\"password\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", \"null\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "the auth endpoints is the first step to jumb into the application It has the fully implemented authorization step"
+		},
+		{
+			"name": "client",
+			"item": [
+				{
+					"name": "requests",
+					"item": [
+						{
+							"name": "makerequest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"price\":120000,\r\n\"area\":\"mans\",\r\n\"district\":\"centeral\",\r\n\"note\":\"I want to rent a villa on the sea view\" \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/client/requests",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"client",
+										"requests"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "viewMatchAd",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/client/requests/viewMatchAd/6689029b1c8c996e15a2aef8",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"client",
+										"requests",
+										"viewMatchAd",
+										"6689029b1c8c996e15a2aef8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getMyRequests",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/client/requests",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"client",
+										"requests"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "viewrequest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/client/requests/6689029b1c8c996e15a2aef8",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"client",
+										"requests",
+										"6689029b1c8c996e15a2aef8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateRequest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"note\":\"Updated By Me   \"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/client/requests/6688f9126910c19a0ba27e12",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"client",
+										"requests",
+										"6688f9126910c19a0ba27e12"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteRequest",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/client/requests/6688f9126910c19a0ba27e12",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"client",
+										"requests",
+										"6688f9126910c19a0ba27e12"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "getAds",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/client/getAds",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"client",
+								"getAds"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAd",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/client/getAds/668697fc935c177b8edadf48/request",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"client",
+								"getAds",
+								"668697fc935c177b8edadf48",
+								"request"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "this endpoinst has its client asses to the app"
+		},
+		{
+			"name": "agent",
+			"item": [
+				{
+					"name": "getRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agent/getRequest/6688faf75fce3191e43200dc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"getRequest",
+								"6688faf75fce3191e43200dc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "makeAd",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "propertyType",
+									"value": "villa",
+									"type": "text"
+								},
+								{
+									"key": "area",
+									"value": "Abu dhabi",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "dubai",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "2100000",
+									"type": "text"
+								},
+								{
+									"key": "district",
+									"value": "al hayy alawal",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/C:/Users/Logo/Desktop/test/download (2).jpeg"
+								},
+								{
+									"key": "type",
+									"value": "rent",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/agent/makeAd",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"makeAd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMyAds",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agent/getMyAds?page=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"getMyAds"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "requests",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agent/requests/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"requests",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAd",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agent/getAd/66869815935c177b8edadf4d",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"getAd",
+								"66869815935c177b8edadf4d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find Requests of the ad",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agent/getAd/668697fc935c177b8edadf48/matchRequest",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"getAd",
+								"668697fc935c177b8edadf48",
+								"matchRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateAd",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"propertyType\": \"HOUSE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/agent/getAd/668697fc935c177b8edadf48",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"getAd",
+								"668697fc935c177b8edadf48"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAd",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agent/getAd/668697fc935c177b8edadf48",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"getAd",
+								"668697fc935c177b8edadf48"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "this endpoinst has its Agent asses to the app"
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "getStats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/admin/stats?page=5&limit=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"stats"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "5"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "requestsStats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/admin/requestsStats",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"requestsStats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "myProfile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/user/myprofile",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"myprofile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateProfile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\"name\":\"7amada\",\r\n\r\n\"ww-fkw9fgwf\":\"wgfwgwfwf\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/user/updateProfile",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"updateProfile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatePassword",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\":\"password\",\r\n\"newPassword\":\"passworder\",\r\n\"confirmPassword\":\"passworder\"  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/user/updatePassword",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"updatePassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteProfile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"jwt\", \"null\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/user/deleteProfile",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"user",
+						"deleteProfile"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

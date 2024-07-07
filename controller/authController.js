@@ -104,7 +104,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   });
 
   if (!newUser) return next(new AppError("problem", 404));
-  console.log(newUser);
+  // console.log(newUser);
 
   await createMailToken(newUser, req, "verify");
   let message;

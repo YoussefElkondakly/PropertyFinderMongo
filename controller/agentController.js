@@ -10,14 +10,14 @@ exports.uploadImage = imageUpload.uploadPhoto("property");
 
 exports.makeAd = async (req, res, next) => {
   try {
-    console.log("This", req.file);
+    // console.log("This", req.file);
     const base = req.originalUrl
       .split("/")
       .filter((el) => {
         if (el === "matchingSystem" || el === "propertyFinder") return el;
       })
       .join("/");
-    console.log(req.body.photo);
+    // console.log(req.body.photo);
     req.body.photo = `${req.protocol}://${req.get("host")}/${base}/uploads/${
       req.category ? req.category + "/" : ""
     }${req.file.filename}`;
@@ -37,20 +37,7 @@ exports.makeAd = async (req, res, next) => {
     next(err);
   }
 };
-/**
- *  async paginate() {
-      // try{
-      const page = this.queryObj.page * 1 || 1;
-      const limit = this.queryObj.limit * 1 || 10;
-      const skip = (page - 1) * limit;
-      this.query = this.query.skip(skip).limit(limit);
-  
-      //see the ccount of the documents
-      if (this.queryObj.page && this.extra !== null) {
-        const count = await this.extra;
-        if (skip >= count) throw new AppError("Page Not Found",404);
-      }
- */
+
 
 exports.getMyAds = catchAsync(async (req, res, next) => {
   const query = Ads.find({ agent: req.user.id });
@@ -197,7 +184,17 @@ exports.matchRequest = catchAsync(async (req, res, next) => {
     data: requests,
   });
 });
-
+exports.getRequest = catchAsync(async (req, res, next) => {
+  const request = await RequestAd.findOne({ _id: req.params.requestId });
+  if (!request) return next(new AppError("No Request Found", 404));
+  console.log(request)
+  request.status =true
+  await request.save();
+  res.status(200).json({
+    status: "success",
+    data: request,
+  });
+});
 /**
  *  const requests = await RequestAd.aggregate([
      {
@@ -236,4 +233,18 @@ router.post("/test", folder.uploadphoto('my data'), (req, res, next) => {
   console.log(picUrl);
   res.end();
 });
+ */
+/**
+ *  async paginate() {
+      // try{
+      const page = this.queryObj.page * 1 || 1;
+      const limit = this.queryObj.limit * 1 || 10;
+      const skip = (page - 1) * limit;
+      this.query = this.query.skip(skip).limit(limit);
+  
+      //see the ccount of the documents
+      if (this.queryObj.page && this.extra !== null) {
+        const count = await this.extra;
+        if (skip >= count) throw new AppError("Page Not Found",404);
+      }
  */

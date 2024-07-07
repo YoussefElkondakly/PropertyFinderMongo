@@ -4,6 +4,7 @@ const authRoutes=require('./routes/authRoutes')
 const userRoutes=require('./routes/userRoutes')
 const agentRoutes=require('./routes/agentRoutes')
 const clientRoutes = require("./routes/clientRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 const errController=require('./utils/errHandler')
 const AppError=require('./utils/appError')
 // const {protect}=require('./controller/authController')

@@ -14,6 +14,7 @@ router.post(
 router.get("/getMyAds", agentController.getMyAds);
 
 router.use(authController.isVerified);
+router.get("/getRequest/:requestId", agentController.getRequest);
 router.get(
   "/getAd/:adId/matchRequest",
   agentController.checkOwnerShip,
