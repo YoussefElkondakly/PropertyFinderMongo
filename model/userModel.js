@@ -1,18 +1,17 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
-const validator=require('validator')
+const validator = require("validator");
 const userSchema = mongoose.Schema({
   name: { type: String, required: true },
   phone: {
     type: String,
     required: true,
-    // minlength: [11, "Please Type a Correct Phone Number"],
-    // maxlength: [11, "Please Type a Correct Phone Number"],
+
     unique: true,
     validate: {
       validator: (v) => {
-        const a = validator.isMobilePhone(v, ["ar-EG"],{
+        const a = validator.isMobilePhone(v, ["ar-EG"], {
           strictMode: true,
         });
 
@@ -20,7 +19,6 @@ const userSchema = mongoose.Schema({
       },
       message: "Please Type a Correct Phone Number",
     },
-   
   },
   role: {
     type: String,
@@ -66,8 +64,7 @@ userSchema.methods.checkChangedPassword = function (jwtIat) {
   // console.log("Hi");
   if (this.passwordChangedAt) {
     const changedPasswordTime = this.passwordChangedAt.getTime() / 1000;
-    // console.log(changedPasswordTime, jwtIat);
-    // console.log(jwtIat < changedPasswordTime);
+
     return jwtIat < changedPasswordTime;
   }
   return false;
@@ -79,7 +76,7 @@ userSchema.methods.createToken = function (type) {
       .createHash("sha256") //
       .update(resetToken) //
       .digest("hex"); //
-    // console.log({ resetToken }, this.passwordResetToken);
+
     this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
     return resetToken;

@@ -54,6 +54,7 @@ exports.getMyAds = catchAsync(async (req, res, next) => {
 
 exports.getAllRequests = catchAsync(async (req, res, next) => {
   const query = RequestAd.find();
+  console.log(query)
   const requests = await paginate(req.query, query);
   if (requests.length === 0) return next(new AppError("No Ads Right Now", 404));
   res.status(200).json({
@@ -195,56 +196,3 @@ exports.getRequest = catchAsync(async (req, res, next) => {
     data: request,
   });
 });
-/**
- *  const requests = await RequestAd.aggregate([
-     {
-       $match: {
-         $or: [
-           {
-             price: {
-               $lte: budget + budget * 0.1,
-               $gte: budget - budget * 0.1,
-             },
-           },
-          
-         ],
- area: { $regex: ad.area, $options: "i" } ,
-    district: { $regex: ad.district, $options: "i" },
-         
-       },
-     },
-   ]);
- */
-
-/**
- * 
-
-router.post("/test", folder.uploadphoto('my data'), (req, res, next) => {
-  console.log(req.file);
-  const base = req.originalUrl
-    .split("/")
-    .filter((el) => {
-      if (el === "matchingSystem" || el === "propertyFinder") return el;
-    })
-    .join("/");
-  const picUrl = `${req.protocol}://${req.get("host")}/${base}/uploads/${
-    req.file.filename
-  }`;
-  console.log(picUrl);
-  res.end();
-});
- */
-/**
- *  async paginate() {
-      // try{
-      const page = this.queryObj.page * 1 || 1;
-      const limit = this.queryObj.limit * 1 || 10;
-      const skip = (page - 1) * limit;
-      this.query = this.query.skip(skip).limit(limit);
-  
-      //see the ccount of the documents
-      if (this.queryObj.page && this.extra !== null) {
-        const count = await this.extra;
-        if (skip >= count) throw new AppError("Page Not Found",404);
-      }
- */

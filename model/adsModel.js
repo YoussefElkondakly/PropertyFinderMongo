@@ -39,14 +39,6 @@ adsSchema.pre(/^find/, function (next) {
   });
   next();
 });
-// adsSchema.pre('aggregate',async function(next){
-// await this.populate({
-//   path: "agent",
-//   select: "name phone -_id",
-
-// })
-// next()
-// })
 
 const Ads = mongoose.model("Ads", adsSchema);
 

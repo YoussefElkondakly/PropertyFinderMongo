@@ -1,4 +1,3 @@
-// const imageUpload = require("./../utils/imageUpload");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("../utils/appError");
 const Ads = require("./../model/adsModel");
@@ -124,29 +123,3 @@ exports.deleteRequest = catchAsync(async (req, res, next) => {
     data: request,
   });
 });
-
-// const {client} = await RequestAd.findOne({ _id: req.params.requestId }).select("client -_id");
-// console.log(client)
-//   if (request.length === 0 || !("" + request.client === req.user.id))
-//     return next(new AppError("No Ads Right Now", 404));
-
-// const request = await RequestAd.findOne({ _id: req.params.requestId });
-// console.log(request)
-// if (!request||!(''+request.client===req.user.id)) return next(new AppError("No Ads Right Now", 404));
-
-//in this controller you are an official verified client
-//you have in the request the params of the requested property's Id and your user Id that will be linked
-//to the ad
-//you have in the request body that have a message to the agent
-
-// const getAll=function(Model){
-//   return catchAsync(async (req, res, next) => {
-//   const all = await Model.find({client:user.id});
-//   if (all.length === 0) return next(new AppError("No Ads Right Now", 404));
-
-//   res.status(200).json({
-//     status: "success",
-//     data: all,
-//   });
-// });
-// }

@@ -60,11 +60,11 @@ exports.protect = catchAsync(async (req, res, next) => {
     return next(new AppError("You are Not Logged in please log in", 400));
   }
   const token = req.headers.authorization.split(" ")[1];
-   if (token==='null')
-     return next(new AppError("You are Not Logged In Please Login", 400));
-    
+  if (token === "null")
+    return next(new AppError("You are Not Logged In Please Login", 400));
+
   const data = await jwt.verify(token, process.env.JWT_SECURE);
- 
+
   //here you will compare the TS of The TOKEN with The TS of PasswordChanged at
   const id = data.data;
   const user = await User.findOne({ _id: id });
@@ -78,21 +78,22 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = user;
   next();
 });
-exports.accessManager=function(role){
-  return function(req,res,next){
-
-    if(!(req.user.role===role)) 
-      return next(new AppError("You are not allowed to access this route",400));
+exports.accessManager = function (role) {
+  return function (req, res, next) {
+    if (!(req.user.role === role))
+      return next(
+        new AppError("You are not allowed to access this route", 400)
+      );
     next();
-  }
-}
-exports.isVerified=(req,res,next)=>{
-     if (!req.user.verified)
-       return next(
-         new AppError("You Cant make any Ad unless Your account Be Verified")
-       );
-       next()
-}
+  };
+};
+exports.isVerified = (req, res, next) => {
+  if (!req.user.verified)
+    return next(
+      new AppError("You Cant make any Ad unless Your account Be Verified")
+    );
+  next();
+};
 exports.signup = catchAsync(async (req, res, next) => {
   if (!req.body.phone.includes("+2")) req.body.phone = "+2" + req.body.phone;
   const newUser = await User.create({
@@ -113,11 +114,11 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 //find && findOne
 exports.login = catchAsync(async (req, res, next) => {
-if(!req.body.phone.includes('+2'))req.body.phone="+2"+req.body.phone
+  if (!req.body.phone.includes("+2")) req.body.phone = "+2" + req.body.phone;
   const user = await User.findOne({ phone: req.body.phone }).select(
     "+password"
   );
-  
+
   if (!user || !user.status)
     return next(new AppError("Incorrect Phone Or Password", 404));
   // console.dir(user);
@@ -175,13 +176,13 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.logout=(req,res,next)=>{
-  res.cookie('jwt', 'loggedout', {
+exports.logout = (req, res, next) => {
+  res.cookie("jwt", "loggedout", {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
-    });
-    res.status(200).json({
-      status: "success",
-      message: "logged out successfully",
-      });
-}
+  });
+  res.status(200).json({
+    status: "success",
+    message: "logged out successfully",
+  });
+};

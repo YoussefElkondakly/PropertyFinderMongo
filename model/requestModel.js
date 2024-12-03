@@ -1,10 +1,5 @@
 const mongoose = require("mongoose");
-/*
-Area: Heliopolis
-City: Cairo
-District: Heliopolis district, Cairo Governorate
-district, price, and area
-*/
+
 const requestSchema = mongoose.Schema({
   client: {
     type: mongoose.Schema.ObjectId,
@@ -27,14 +22,14 @@ const requestSchema = mongoose.Schema({
     required: [true, "you Need To provide the district of the property"],
   },
   //Non required with requests
-    propertyType: {
+  propertyType: {
     type: String,
     uppercase: true,
- enum: {
+    enum: {
       values: ["VILLA", "HOUSE", "LAND", "APARTMENT"],
       message: "Please Insert a Correct Property Type",
     },
-  }, 
+  },
   description: String,
   city: String,
   note: String,
@@ -42,17 +37,17 @@ const requestSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  refreshedAt:{
+  refreshedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
-requestSchema.pre(/^find/,function(next){
+requestSchema.pre(/^find/, function (next) {
   this.populate({
     path: "client",
     select: "name phone -_id",
-    });
-    next();
-})
+  });
+  next();
+});
 const RequestAd = mongoose.model("RequestAd", requestSchema);
 module.exports = RequestAd;

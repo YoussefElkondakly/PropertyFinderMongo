@@ -30,7 +30,7 @@ router
   .patch(
     agentController.checkOwnerShip,
     agentController.uploadImage,
-agentController.checkBody
+    agentController.checkBody
   )
   .delete(agentController.checkOwnerShip, agentController.deleteAd);
 module.exports = router;
